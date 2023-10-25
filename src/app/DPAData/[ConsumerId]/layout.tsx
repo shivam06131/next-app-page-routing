@@ -1,7 +1,9 @@
 import { Metadata, ResolvingMetadata } from "next";
 import React from "react";
 
-const DPADataLayout = ({ children }: { children: React.ReactNode }) => {
+const DPADataLayout = async ({ children }: { children: React.ReactNode }) => {
+
+  
   return (
     <>
       <div>

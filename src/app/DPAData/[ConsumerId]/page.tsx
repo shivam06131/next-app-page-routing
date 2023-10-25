@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Button from "@/components/Button";
 import { fakeAPiCall } from "@/utils/fakeAPiCall";
 import { error } from "console";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 // export async function generateMetadata({params} : {
 //   params : {
-//     ConsumerId: string 
+//     ConsumerId: string
 //   }
 // }) {
 //   return {
@@ -16,28 +16,43 @@ import { useEffect, useState } from "react";
 //   }
 // }
 
-const DPADataConsumer =  ({ params }: { params: { ConsumerId: string } }) => {
+const DPADataConsumer = ({ params }: { params: { ConsumerId: string } }) => {
   // const data = await fakeAPiCall();
-  const [apiData , setApiData] = useState(0);
+  const [data, setData] = useState(0);
+  const [apiData, setApiData] = useState([]);
 
   useEffect(() => {
-    console.log("Api Data Updated")
-  },[apiData]);
+    fakeAPiCall().then((data : any) => {
+      setApiData(data);
+    });
+  }, []);
 
-  // console.log("data here xyz", data)
+  console.log("apiData outside", apiData);
 
   const onClickHandler = () => {
     console.log("Clicked...");
-    setApiData(apiData + 1)
+    setData(data + 1);
   };
   console.log("params here", params);
 
+  if(apiData.length == 0){
+    return(
+      <p>
+        Loading...
+      </p>
+    )
+  }
+
   return (
     <>
-      <div>DPADataConsumer with {params.ConsumerId} ID</div>
-      {/* <Button/> */}
-      <button onClick={onClickHandler}>ApiData</button>
-      <p>{apiData}</p>
+      {/* <div>DPADataConsumer with {params.ConsumerId} ID</div>
+      <button onClick={onClickHandler}>data</button>
+      <p>{data}</p> */}
+      {apiData?.map((data: any, index: any) => {
+        return(
+          <p key={index}>{data.title}</p>
+        )
+      })}
     </>
   );
 };
